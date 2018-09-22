@@ -1,0 +1,7 @@
+cmd/cati/cati
+vendor/.bin
+release/
+.DS_Store
+*.swp
+.cati.yaml
+!internal/command/testdata/.cati.yaml

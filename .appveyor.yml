@@ -1,0 +1,29 @@
+---
+image: Visual Studio 2017
+version: "{build}"
+clone_folder: C:\Users\appveyor\go\src\github.com\roshi619\cati
+environment:
+  GOPATH: C:\Users\appveyor\go
+  GOVERSION: '1.10'
+install:
+- cmd: >-
+    set PATH=%GOPATH%\bin;C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin;%PATH%
+
+    rmdir C:\go /s /q
+
+    appveyor DownloadFile https://storage.googleapis.com/golang/go%GOVERSION%.windows-amd64.msi
+
+    msiexec /i go%GOVERSION%.windows-amd64.msi /q
+
+    go version
+
+    go env
+
+    mingw32-make --version
+
+    mingw32-make install-tools
+build_script:
+- cmd: mingw32-make build
+test_script:
+- cmd: mingw32-make lint-only
+- cmd: mingw32-make test-only
